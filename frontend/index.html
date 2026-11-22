@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LCC LibTrack — Library Book Borrowing System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="brand">
+      <h1>LCC LibTrack</h1>
+      <span id="wsStatus" class="badge offline">Connecting...</span>
+    </div>
+    <div id="userBar" class="user-bar hidden">
+      <span id="welcomeText"></span>
+      <button id="logoutBtn" class="btn btn-outline">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="alertBox" class="alert hidden"></div>
+
+    <!-- AUTH SECTION -->
+    <section id="authSection" class="card auth-card">
+      <div class="tabs">
+        <button id="tabRegister" class="tab active">Student Register</button>
+        <button id="tabLogin" class="tab">Login</button>
+      </div>
+
+      <form id="registerForm">
+        <h2>Student Registration</h2>
+        <p class="sub-hint">Students must register their name, username, and password before borrowing.</p>
+        <label>Name</label>
+        <input type="text" id="regName" placeholder="Enter your full name" required />
+        <label>Username</label>
+        <input type="text" id="regEmail" placeholder="Choose a username" required />
+        <label>Password (min 6 chars)</label>
+        <input type="password" id="regPassword" placeholder="Create a password" required />
+        <button type="submit" class="btn btn-primary full">Register Student</button>
+      </form>
+
+      <form id="loginForm" class="hidden">
+        <h2>Sign In</h2>
+        <label>Username</label>
+        <input type="text" id="loginEmail" placeholder="Enter username" required />
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter password" required />
+        <button type="submit" class="btn btn-primary full">Login</button>
+        <p class="hint">
+          <b>Admin Portal:</b> admin123 / gwapoko123<br />
+          <b>Students:</b> Register first on the Student Register tab.
+        </p>
+      </form>
+    </section>
+
+    <!-- DASHBOARD SECTION -->
+    <section id="dashboardSection" class="hidden">
+      <div id="adminPanel" class="card hidden">
+        <h2 id="bookFormTitle">Add New Book (Admin Portal)</h2>
+        <div class="isbn-row">
+          <input type="text" id="isbnLookupInput" placeholder="Optional: Lookup real ISBN via Open Library API" />
+          <button type="button" id="lookupBtn" class="btn btn-secondary">Lookup ISBN</button>
+        </div>
+
+        <form id="bookForm" class="grid-form">
+          <input type="hidden" id="editBookId" />
+          <input type="text" id="bookTitle" placeholder="Book Title" required />
+          <input type="text" id="bookAuthor" placeholder="Author" required />
+          <input type="text" id="bookIsbn" placeholder="ISBN (e.g. ISBN-7)" required />
+          <input type="text" id="bookCategory" placeholder="Category (e.g. Literature, IT)" required />
+          <input type="number" id="bookCopies" placeholder="Total Copies" min="1" value="1" required />
+          <input type="text" id="bookCover" placeholder="Cover URL (optional)" />
+          <div class="form-actions">
+            <button type="submit" id="saveBookBtn" class="btn btn-primary">Save Book</button>
+            <button type="button" id="cancelEditBtn" class="btn btn-outline hidden">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="section-header">
+          <h2>Library Catalog</h2>
+          <input type="text" id="searchInput" placeholder="Search by ISBN (e.g. ISBN-1), title, or author..." />
+        </div>
+
+        <div id="categoryBar" class="category-bar"></div>
+        <div id="booksGrid" class="books-grid"></div>
+      </div>
+
+      <div class="card">
+        <h2 id="borrowingsHeading">My Borrowed Books</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Book Title</th>
+                <th>ISBN</th>
+                <th id="thBorrower" class="hidden">Borrower</th>
+                <th>Borrowed</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="borrowingsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
